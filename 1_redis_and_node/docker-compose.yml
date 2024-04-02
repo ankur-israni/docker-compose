@@ -1,0 +1,30 @@
+# Deploy and run:
+#1: Building when there is a change in any file : docker-compose up --build
+# OR
+#2: Starting docker compose : docker-compose up
+
+# Other variations:
+# Starting docker-compose  in the background - docker-compose up -d
+# Stopping docker - docker-compose down
+
+# Browser > http://localhost:3001/
+version: '3'
+
+# services = images that you want to load through docker-compose
+# Here we are loading two images - redis and node.
+services: 
+    redis-server:
+            image: 'redis'
+
+    #To load the node-app image 'Dockerfile' in the current directory should be present.
+    node-app:
+
+        #restart policy can be - always, never, on-failure and unless-stopped
+        restart: on-failure
+        
+        #build in the current directory
+        build: .  
+        
+        # external port = 3001, container port = 4001
+        ports:
+            - "3001:4001"        
